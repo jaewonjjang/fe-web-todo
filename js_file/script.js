@@ -61,28 +61,6 @@
 
 
 
-// // 화면 오른쪽에 기록 화면 추가 -> visable
-// const show_menu = document.querySelectorAll(".top_button");
-
-// show_menu.forEach(item=>{
-//     item.addEventListener('click', () => {
-// 		let side_menu= document.getElementById("side_bar");
-
-// 		side_menu.style.visibility = "visible";
-// 	})
-// })
-
-// const close_menu = document.querySelectorAll(".menu_close_button");
-
-// close_menu.forEach(item=>{
-//     item.addEventListener('click', () => {
-// 		let side_menu= document.getElementById("side_bar");
-
-// 		side_menu.style.visibility = "hidden";
-// 	})
-// })
-
-
 //import card_addition from './card_element.js';
 
 class column_element{
@@ -161,8 +139,6 @@ class column_element{
 	};
 	modify_card() {};
 }
-
-
 
 
 export {column_element}
