@@ -1,0 +1,14 @@
+._row_elem{
+    display:flex;
+    flex-direction:column;
+    padding : 0px 10px 10px 10px;
+}
+
+._col_header{
+    display:flex;
+    justify-content:space-between;
+    text-align:center;
+    width:200px;
+    padding:0px 15px 0px 15px;
+}
+

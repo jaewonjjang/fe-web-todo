@@ -4,22 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TO-DO-WEB</title>
-    <!-- css file -->
-    <link rel="stylesheet" href="style.css">
 
-    <!-- javascript file -->
-    <!-- <script type="text/javascript" src="script.js"></script> -->
-    
+    <title>TO-DO-WEB</title>
+
+    <!-- css file -->
+    <link rel="stylesheet" href="/css_file/background.css">
+    <link rel="stylesheet" href="/css_file/button.css">
+    <link rel="stylesheet" href="/css_file/card_elem.css">
+    <link rel="stylesheet" href="/css_file/row_elem.css">
+    <link rel="stylesheet" href="/css_file/modal.css">
+
     <!-- external js file -->
     <script src="https://kit.fontawesome.com/4d499a68c2.js" crossorigin="anonymous"></script>
+
+
 <body style="z-index:1">
     <div class="side_menu" id="side_bar">
         <button class="menu_close_button">
             <i class="fa fa-remove"></i>
         </button>
     </div>
-    <button class="column_add_button" onclick="make_new_column()">
+    <button class="column_add_button" id="#column_add_button">
         <i class="fa fa-plus"></i>
     </button>
     <div id = _header>
@@ -29,7 +34,10 @@
         </button>
     </div><br><br>
     <div class="_todo_table" id="#_todo_table"></div>
-    <script src ="script.js"></script>
+
+    <!-- js files -->
+    <script type="module" src ="/js_file/template.js"></script>
+    <script type="module" src ="/js_file/script.js"></script>
 </body>
 </html>
 

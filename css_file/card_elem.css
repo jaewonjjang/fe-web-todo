@@ -1,0 +1,36 @@
+.circle{
+    position:relative;
+    margin-right:auto;
+    background-color: gray;
+    display:inline-block;
+    border-radius: 90%;
+    width:15px;
+    height:15px;
+    padding:5px;
+    margin-top:9px;
+    text-align:center;
+}
+
+.total_num{
+    font-size:14px;
+    padding-right:0px;
+}
+
+._col_elem{
+    display:flex;
+    flex-direction:column;
+    background-color:white;
+    width:200px;
+    padding:20px 10px;
+    margin:2%;
+    font-size:12px;
+    border-radius:10px;
+}
+
+#_elem_header{
+    display:flex;
+    justify-content:space-between;
+    font-size:15px;
+    width:180px;
+}
+
