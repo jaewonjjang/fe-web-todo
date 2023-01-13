@@ -1,25 +1,27 @@
 .side_menu {
     z-index:2;
+    display:float;
+    right:0;
+    flex-direction: column;
     visibility: hidden;
     position:absolute;
-    display:inline-block;
     background-color:white;
-    width:20%;
-    height:100%;
-    margin-left:60%;
-    margin-top:0px;
+    width:500px;
+    height:100vh;
     font-size:12px;
 }
 
 .side_card{
-    margin-left:10%;
-    margin-right:10%;
-    z-index:3;
+    margin:auto;
     visibility:inherit;
     display:flex;
     flex-direction:column;
-    width:200px;
-    height:100px;
-    font-size:15px;
-    background-color: yellow;
+    width:350px;
+    height:200px;
+    font-size:30px;
+    border-radius: 5%;
+    margin-bottom:10px;
+    background-color: antiquewhite;
+    border-color: darkgreen;
+    padding:20px;
 }

@@ -49,15 +49,13 @@ button:hover {
     color:blue;
 }
 
-.my_button_delete{
-    margin-right:auto;    
+.my_button_delete{   
     background-color:transparent;
     border-color: transparent;
-    color : lightgrey;
+    color : lightsalmon;
 	font-weight:lighter;
 	text-decoration:none;
-    justify-content: center;
-    margin :-5px;
+    margin-left:auto;
 }
 
 .my_button_delete:hover{
