@@ -1,4 +1,5 @@
 const todo_status_list = [];
+const date = new Date();
 
 // 상태값들을 원소로 갖는 배열
 class todo_elem_list{
@@ -19,6 +20,7 @@ class card_elem_list{
     constructor(title, contents){
         this.title = title;
         this.contents = contents;
+        this.time = date.getTime();
     }
 }
 

@@ -1,9 +1,12 @@
-import {todo_status_list, todo_elem_list, card_elem_list} from "./script.js" 
+import {todo_status_list, todo_elem_list, card_elem_list} from "./todo_class.js" 
+import { /*update_side_menu_add, update_side_menu_delete,*/ side_menu_card, side_menu_arr} from "./side_menu.js"
+import {increase_total_num, decrease_total_num} from "./total_elem_number.js"
 
-//새롭게 생성할 column의 이름을 입력받는 함수
+
 const column_add_button = document.getElementById("#column_add_button");
 column_add_button.addEventListener('click', enter_new_column_name)
 
+//새롭게 생성할 column의 이름을 입력받는 함수
 function enter_new_column_name(){
     const box = document.getElementById("#_todo_table");
     const newp = document.createElement('div');
@@ -21,6 +24,7 @@ function enter_new_column_name(){
     input_box.addEventListener('keyup', (event)=> {make_new_column(event, input_box)});
 }
 
+// 입력받은 값으로 새로운 column 생성
 function make_new_column(event, input_box){
     if(event.key == "Enter"){
         const new_col_name = input_box.value;
@@ -57,27 +61,7 @@ function make_new_column(event, input_box){
     }
 }
 
-// 화면 오른쪽에 기록 화면 추가 -> visable
-const show_menu = document.getElementById("top_button");
-show_menu.addEventListener('click', menu_visible);
-
-function menu_visible(){
-    let side_menu= document.getElementById("side_bar");
-
-	side_menu.style.visibility = "visible";
-
-    // 오른쪽 메뉴 안보이게 하기
-    const close_menu = document.getElementById("menu_close_button");
-    close_menu.addEventListener('click', menu_invisible);
-}
-
-function menu_invisible(){
-    let side_menu= document.getElementById("side_bar");
-
-	side_menu.style.visibility = "hidden";
-}
-
-// col_elem(각 리스트 항목) 추가
+// column +에 이벤트 추가
 function make_add_button_active(new_col_name){
     const add_btn = document.getElementById("add_" + new_col_name);
 
@@ -86,6 +70,7 @@ function make_add_button_active(new_col_name){
     })
 }
 
+// column -에 이벤트 추가
 function make_delete_button_active(new_col_name){
     const del_btn = document.getElementById("del_" + new_col_name);
 
@@ -152,14 +137,15 @@ function show_modal_delete(new_col_name){
     const cancel_btn = document.getElementById("modal_cancel_button");
     cancel_btn.addEventListener('click', cancel_action);
 }
+
 function add_card_to_col(id){
     const box = document.getElementById("_col_header_"+id);
     const newp = document.createElement('div');
     newp.classList.add("_col_elem");
 
-    newp.innerHTML = `<h3 id="_elem_header" style="color:blue"><b><input id="card_title" type='text' placeholder="제목을 입력하세요"></b>
+    newp.innerHTML = `<h3 id="_elem_header"><b><input id="card_title" type='text' style='font-size:17px' placeholder="제목을 입력하세요"></b>
                         </h3>
-                        <span style="color:skyblue"><textarea id="card_contents" type='text' placeholder="내용을 입력하세요"></textarea></span>
+                        <pre><textarea id="card_contents" type='text' placeholder="내용을 입력하세요"></textarea></pre>
                         <div class="add_delete_button_area">
                         <button class="card_delete_button" id="card_delete_button_${id}">삭제</button>
                         <button class="card_add_button" id="card_add_button_${id}">등록</button>
@@ -182,6 +168,7 @@ function add_card_to_col(id){
     //     card_add_btn[i].addEventListener('click', ()=>{make_new_card(new_card_title, new_card_contents)});
     // }
 
+    // text_area.addEventListener()
     const card_del_btn = document.getElementById("card_delete_button_" + id);
     const card_add_btn = document.getElementById("card_add_button_" + id);
 
@@ -205,8 +192,14 @@ function del_card_before_register(id){
 }
 
 function make_new_card(id, title, contents){
+
     const del_button_area = title.parentNode.parentNode.parentNode.lastChild;
-    
+    const cur_time = new Date();
+    const new_info_to_side_card = new side_menu_card(id, null, title.value, cur_time, "추가");
+
+    side_menu_arr.card_array_push(new_info_to_side_card);
+
+    console.log(side_menu_arr);
     del_button_area.remove();
 
 
@@ -219,7 +212,7 @@ function make_new_card(id, title, contents){
     const card_del_button = document.getElementById("delete_card_" + title.value);
     card_del_button.addEventListener('click', ()=>{delete_card_in_column(id, title.value)});
     increase_total_num(id, title, contents);
-    update_side_menu_add(id, title, contents);
+    //update_side_menu_add(id, title, contents);
     title.remove();
     contents.remove();
 }
@@ -229,55 +222,14 @@ function make_new_card(id, title, contents){
 //     console.log(todo_status_list[0].status_elem_list);
 // }
 
-
 function delete_card_in_column(id, value){
     const del_card = document.getElementById("delete_card_" + value);
     del_card.parentNode.parentNode.parentNode.remove();
 
-    update_side_menu_delete(id, value);
+    //update_side_menu_delete(id, value);
+    const cur_time = new Date();
+    const new_info_to_side_card = new side_menu_card(id, null, value, cur_time, "삭제");
+
+    side_menu_arr.card_array_push(new_info_to_side_card);
     decrease_total_num(id, value);
-}
-
-function increase_total_num(id, title, contents){
-    const modify_circle = document.getElementById("circle_" + id);
-    const new_card_to_column = new card_elem_list(title.value, contents.value);
-
-    const modify_status = todo_status_list.filter(item => item.status == id);
-    modify_status[0].list_push(new_card_to_column);
-    const modify_total_num = modify_status[0].status_elem_list;
-    modify_circle.innerHTML = `${modify_total_num.length}`;
-}
-
-function decrease_total_num(id, value){
-    const modify_status = todo_status_list.filter(item => item.status == id);
-    const modify_card = modify_status[0].status_elem_list.filter(item => item.title == value);
-
-    //console.log(modify_card);
-
-    modify_status[0].list_pop(modify_card[0]);
-
-    const modify_circle = document.getElementById("circle_" + id);
-    modify_circle.innerHTML = `${modify_status[0].status_elem_list.length}`;
-}
-
-function update_side_menu_add(id, title){
-    const added_menu = document.getElementById("menu_close_button");
-
-    const new_menu = document.createElement("div");
-    new_menu.classList.add("side_card");
-
-    new_menu.innerHTML = `${id}에 ${title.value}를 등록하였습니다`;
-
-    added_menu.after(new_menu);
-}
-
-function update_side_menu_delete(id, value) {
-    const deleted_menu = document.getElementById("menu_close_button");
-
-    const new_menu = document.createElement("div");
-    new_menu.classList.add("side_card");
-
-    new_menu.innerHTML = `${id}에 ${value}를 삭제하였습니다`;
-
-    deleted_menu.after(new_menu);
 }

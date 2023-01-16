@@ -1,27 +1,45 @@
 .side_menu {
     z-index:2;
-    display:float;
     right:0;
+    top:0;
     flex-direction: column;
     visibility: hidden;
     position:absolute;
     background-color:white;
-    width:500px;
-    height:100vh;
-    font-size:12px;
+    width:25%;
+    height:100%;
+    box-shadow: 0px -3px 5px 5px grey;
 }
 
 .side_card{
     margin:auto;
     visibility:inherit;
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     width:350px;
-    height:200px;
-    font-size:30px;
-    border-radius: 5%;
-    margin-bottom:10px;
-    background-color: antiquewhite;
-    border-color: darkgreen;
-    padding:20px;
+    height:100px;
+    margin-bottom:0px;
+    background-color: white;
+    padding:10px;
+}
+
+.side_card > .side_card_imoji{
+    font-size:35px;
+    border-color: black;
+    margin-right:20px;
+}
+
+.side_card > .contents{
+    display:flex;
+    flex-direction:column;
+}
+
+.side_card > .contents > .contents_anthor {
+    border-color: inherit;
+}
+.side_card > .contents > .contents_contents {
+    border-color: inherit;
+}
+.side_card > .contents > .contents_time {
+    border-color: inherit;
 }
