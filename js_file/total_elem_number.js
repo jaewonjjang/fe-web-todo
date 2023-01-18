@@ -15,7 +15,6 @@ function decrease_total_num(id, value){
     const modify_card = modify_status[0].status_elem_list.filter(item => item.title == value);
 
     //console.log(modify_card);
-
     modify_status[0].list_pop(modify_card[0]);
 
     const modify_circle = document.getElementById("circle_" + id);

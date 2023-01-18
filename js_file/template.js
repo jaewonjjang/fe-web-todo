@@ -7,7 +7,7 @@ const column_add_button = document.getElementById("#column_add_button");
 column_add_button.addEventListener('click', enter_new_column_name)
 
 //새롭게 생성할 column의 이름을 입력받는 함수
-function enter_new_column_name(){
+function enter_new_column_name() {
     const box = document.getElementById("#_todo_table");
     const newp = document.createElement('div');
     newp.classList.add("_row_elem");

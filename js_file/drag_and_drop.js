@@ -24,23 +24,26 @@ todo_table.addEventListener("mousedown", (e) => {
 
     if (cursoroncard != null && is_editing == null && is_remove==null) {
       const newp = document.createElement("div");
-      newp.classList.add("_col_elem");
-      newp.classList.add("illusion");
-      newp.innerHTML = cursoroncard.innerHTML;
-
-      cursoroncard.after(newp);
-
-      let shiftX = e.clientX - e.target.getBoundingClientRect().left;
-      let shiftY = e.clientY - e.target.getBoundingClientRect().top;
-
-      function moveAt(pageX, pageY) {
-        cursoroncard.style.left = pageX - shiftX + 'px';
-        cursoroncard.style.top = pageY - shiftY + 'px';
-      }
-    
-      moveAt(e.pageX, e.pageY);
     
       function onMouseMove(e) {
+
+        
+        newp.classList.add("_col_elem");
+        newp.classList.add("illusion");
+        newp.innerHTML = cursoroncard.innerHTML;
+
+        cursoroncard.after(newp);
+
+        let shiftX = e.clientX - e.target.getBoundingClientRect().left;
+        let shiftY = e.clientY - e.target.getBoundingClientRect().top;
+
+        function moveAt(pageX, pageY) {
+          cursoroncard.style.left = pageX - shiftX + 'px';
+          cursoroncard.style.top = pageY - shiftY + 'px';
+        }
+      
+        moveAt(e.pageX, e.pageY);
+
         cursoroncard.classList.add("moving");
         document.body.append(cursoroncard);
         moveAt(e.pageX, e.pageY);
