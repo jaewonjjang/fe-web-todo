@@ -76,7 +76,7 @@ function make_delete_button_active(new_col_name){
 
     del_btn.addEventListener('click', () =>{
         show_modal_delete(new_col_name);
-    })
+    },true);
 }
 
 function show_modal_add(new_col_name){
@@ -142,6 +142,7 @@ function add_card_to_col(id){
     const box = document.getElementById("_col_header_"+id);
     const newp = document.createElement('div');
     newp.classList.add("_col_elem");
+    newp.classList.add("editing");
 
     newp.innerHTML = `<h3 id="_elem_header"><b><input id="card_title" type='text' style='font-size:17px' placeholder="제목을 입력하세요"></b>
                         </h3>
@@ -193,6 +194,7 @@ function del_card_before_register(id){
 
 function make_new_card(id, title, contents){
 
+    title.parentNode.parentNode.parentNode.classList.remove("editing");
     const del_button_area = title.parentNode.parentNode.parentNode.lastChild;
     const cur_time = new Date();
     const new_info_to_side_card = new side_menu_card(id, null, title.value, cur_time, "추가");
@@ -203,7 +205,7 @@ function make_new_card(id, title, contents){
     del_button_area.remove();
 
 
-    title.parentNode.innerHTML = `${title.value}
+    title.parentNode.innerHTML = `<span class="card_title">${title.value}</span>
                                 <button class="my_button_delete" id="delete_card_${title.value}">
                                     <i class="fa fa-remove"></i>
                                 </button>`;

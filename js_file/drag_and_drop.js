@@ -7,93 +7,69 @@
 5. 이동이 끝나면 우측 메뉴 업데이트 작업
 */
 
+
+import {side_menu_card, side_menu_arr} from "./side_menu.js"
+
 const todo_table = document.getElementsByClassName("_todo_table")[0];
+const remove_drag_from_card = todo_table.getElementsByClassName("_col_elem");
+
+document.body.ondragstart = function(){
+  return false;
+}
 
 todo_table.addEventListener("mousedown", (e) => {
     const cursoroncard = e.target.closest("._col_elem");
-    if (cursoroncard != null) {
-      alert("jaewon");
-    }
+    const is_editing = e.target.closest(".editing");
+    const is_remove = e.target.closest(".my_button_delete")
+
+    if (cursoroncard != null && is_editing == null && is_remove==null) {
+      const newp = document.createElement("div");
+      newp.classList.add("_col_elem");
+      newp.classList.add("illusion");
+      newp.innerHTML = cursoroncard.innerHTML;
+
+      cursoroncard.after(newp);
+
+      let shiftX = e.clientX - e.target.getBoundingClientRect().left;
+      let shiftY = e.clientY - e.target.getBoundingClientRect().top;
+
+      function moveAt(pageX, pageY) {
+        cursoroncard.style.left = pageX - shiftX + 'px';
+        cursoroncard.style.top = pageY - shiftY + 'px';
+      }
+    
+      moveAt(e.pageX, e.pageY);
+    
+      function onMouseMove(e) {
+        cursoroncard.classList.add("moving");
+        document.body.append(cursoroncard);
+        moveAt(e.pageX, e.pageY);
+        document.body.style.userSelect='none';
+        let elemBelow = document.elementFromPoint(e.clientX, e.clientY);
+        const new_location_for_moving_card = elemBelow.closest("._row_elem");
+        
+        if(new_location_for_moving_card){
+          const col_name_of_new_location = new_location_for_moving_card.childNodes[0];
+          col_name_of_new_location.insertAdjacentElement("afterend", newp);
+        }
+      }
+    
+      document.addEventListener('mousemove', onMouseMove);
+    
+      function onmouseup() {
+        document.removeEventListener('mousemove', onMouseMove);
+        cursoroncard.classList.remove("moving");
+        // const cur_title = cursoroncard.getElementsByClassName("card_title")[0].innerHTML;
+        // const old_col_name = cursoroncard.parentNode.getElementsByClassName
+        // console.log(cur_title);
+        newp.after(cursoroncard);
+        newp.remove();
+
+        //append_to_right_column(cursoroncard);
+        cursoroncard.onmouseup = null;
+      };
+
+      document.addEventListener('mouseup', onmouseup);
+    };
 });
 
-
-// const moveContainer = (e) => {
-//   if (!e.target.classList.contains("item")) return;
-//   let shiftX = e.clientX - e.target.getBoundingClientRect().left;
-//   let shiftY = e.clientY - e.target.getBoundingClientRect().top;
-
-//   e.target.style.position = 'absolute';
-//   e.target.style.zIndex = 1000;
-//   section.append(e.target);
-
-//   moveAt(e.pageX, e.pageY);
-
-//   function moveAt(pageX, pageY) {
-//     e.target.style.left = pageX - shiftX + 'px';
-//     e.target.style.top = pageY - shiftY + 'px';
-//   }
-
-
-//   function onMouseMove(event) {
-
-//     moveAt(event.pageX, event.pageY);
-
-//     e.target.hidden = true;
-//     let elemBelow = document.elementFromPoint(event.clientX, event.clientY);
-//     e.target.hidden = false;
-
-//     if (!elemBelow) return;
-
-//     let droppableBelow = elemBelow.closest('.droppable');
-//     if (currentDroppable != droppableBelow) {
-//       if (currentDroppable) {
-//         leaveDroppable(currentDroppable);
-
-//       }
-//       currentDroppable = droppableBelow;
-//       if (currentDroppable) {
-//         enterDroppable(currentDroppable);
-//         appendSideElement(e.target, droppableBelow);
-
-
-//       }
-//     }
-//   }
-
-//   document.addEventListener('mousemove', onMouseMove);
-
-//   e.target.onmouseup = function () {
-//     document.removeEventListener('mousemove', onMouseMove);
-//     e.target.onmouseup = null;
-//   };
-
-// };
-
-// function enterDroppable(elem) {
-//   elem.style.borderColor = 'blue';
-// }
-
-// function appendSideElement(elem, target) {
-//   const temp = elem;
-//   temp.style = "";
-//   temp.style.transition = 'transition: all 3s linear;';
-//   temp.className = "mini";
-//   elem.remove();
-//   target.append(temp);
-// }
-
-// function appendMainElement(elem) {
-//   elem.className = "mini";
-//   side.append(elem);
-
-// }
-
-// function leaveDroppable(elem) {
-//   elem.style.background = '';
-// }
-
-// con.ondragstart = function () {
-//   return false;
-// };
-
-// con.addEventListener('mousedown', moveContainer);

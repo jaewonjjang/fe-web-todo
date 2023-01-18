@@ -45,3 +45,12 @@
     font-size:13px;
     border:none;
 }
+
+.illusion {
+    opacity: 0.6;
+}
+
+.moving {
+    position: absolute;
+    z-index: 100;
+}

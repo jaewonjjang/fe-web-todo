@@ -145,7 +145,7 @@ function update_side_menu(close_menu){
         else if(side_menu_arr.card_array[i].action == "이동"){
 
         }
-        else return;ㄴㅇ
+        else return;
     }
 }
 
