@@ -1,0 +1,33 @@
+{
+    "todo_status_list":[
+        {
+            "status":"해야할 일", 
+            "status_elem_list":[
+                {
+                    "title": "GitHub 공부하기", 
+                    "contents": "add, commit, push",
+                    "author": "author by jaewon"
+                },
+                {
+                    "title": "블로그에 포스팅할 것",
+                    "contents": "*GitHub 공부내용, *모던 자바스크립트 1장 공부내용", 
+                    "author": "author by jaewon"
+                }
+            ]
+        }, 
+        {
+            "status":"하고 있는 일", 
+            "status_elem_list":[
+                {
+                    "title": "HTML, CSS 공부", 
+                    "contents": "imput 태그 실습",
+                    "author": "author by jaewon"
+                }
+            ]
+        },
+        {
+            "status":"완료한 일",
+            "status_elem_list":[]
+        }
+    ]
+}

@@ -1,14 +1,44 @@
 ._row_elem{
+    border-style:solid;
     display:flex;
     flex-direction:column;
-    padding : 0px 10px 10px 10px;
+    align-items: center;
+    width:308px;
+    padding : 0px;
 }
 
 ._col_header{
+    border-style:solid;
     display:flex;
     justify-content:space-between;
     text-align:center;
-    width:200px;
-    padding:0px 15px 0px 15px;
+    align-items: center;
+    width: 308px;
+    height: 26px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+}
+
+.circle{
+    border-style:solid;
+    position:relative;
+    margin-right:auto;
+    background-color: gray;
+    display:inline-block;
+    border-radius: 90%;
+    width:26px;
+    height:26px;
+    text-align:center;
+}
+
+.total_num{
+    border-style:solid;
+    font-size:14px;
+    align-items: center;
+    text-align: center;
+    /* padding-right:0px; */
 }
 

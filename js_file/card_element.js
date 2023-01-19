@@ -1,7 +1,7 @@
 const contents_box_area = document.getElementsByClassName("_todo_table")[0];
 
 contents_box_area.addEventListener('input', (e) => {
-    const inputarea = e.target.closest('#card_contents');
+    const inputarea = e.target.closest('.card_contents_contents');
     if(inputarea != null){
         contents_box_adjust(inputarea);
     }

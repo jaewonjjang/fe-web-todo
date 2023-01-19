@@ -1,64 +1,87 @@
-import {todo_status_list, todo_elem_list, card_elem_list} from "./todo_class.js" 
-import { /*update_side_menu_add, update_side_menu_delete,*/ side_menu_card, side_menu_arr} from "./side_menu.js"
+import {todo_status_list, todo_elem_list} from "./todo_class.js" 
+import {side_menu_card, side_menu_arr} from "./side_menu.js"
 import {increase_total_num, decrease_total_num} from "./total_elem_number.js"
 
+const todo_table = document.getElementsByClassName("_todo_table")[0];
+
+todo_table.addEventListener('dblclick', (e) => edit_column_name(e));
 
 const column_add_button = document.getElementById("#column_add_button");
 column_add_button.addEventListener('click', enter_new_column_name)
 
 //새롭게 생성할 column의 이름을 입력받는 함수
-function enter_new_column_name() {
-    const box = document.getElementById("#_todo_table");
-    const newp = document.createElement('div');
-    newp.classList.add("_row_elem");
+function enter_new_column_name(){
+    const modal_in_display = document.getElementById("#_todo_table");
+    const new_modal = document.createElement("section");
+    new_modal.id = "modal";
+    
+    new_modal.innerHTML = `<div id="modal_center_adding_new_col">
+                                    <span id="modal_title">추가할 항목의 이름을 입력해주세요</span>
+                                    <input id = new_col_name>
+                                    <div id="modal_button_group">
+                                        <button class="modal_button" id="modal_cancel_button" style="background-color: lightgrey;">
+                                            취소
+                                        </button>
+                                        <button class="modal_button" id="modal_add_button" style="background-color: lightblue;">
+                                            추가
+                                        </button>
+                                    </div>
+                                </div>`
+    
+    modal_in_display.after(new_modal);
 
-    newp.innerHTML = `<div class="_col_header">
-                            <h2>
-                                <input id="col_name" type='text' placeholder="제목을 입력하세요">
-                            </h2>
-                        </div>`
+    
+    const cancel_btn = document.getElementById("modal_cancel_button");
+    cancel_btn.addEventListener('click', cancel_action);
 
-    box.appendChild(newp);
-
-    const input_box = document.getElementById("col_name");
-    input_box.addEventListener('keyup', (event)=> {make_new_column(event, input_box)});
+    const entered_new_col_name = document.getElementById("new_col_name");
+    const add_btn = document.getElementById("modal_add_button");
+    add_btn.addEventListener('click', () =>{ 
+        make_new_column(entered_new_col_name);
+    })
 }
 
 // 입력받은 값으로 새로운 column 생성
-function make_new_column(event, input_box){
-    if(event.key == "Enter"){
-        const new_col_name = input_box.value;
-        const deltag = input_box.parentNode;
-        deltag.parentNode.setAttribute("id", "_col_header_" + new_col_name);
+function make_new_column(input_box){
+    const entered_new_col_name = input_box.value;
+    //console.log(entered_new_col_name);
+    const deltag = input_box.parentNode.parentNode;
 
-        deltag.remove();
+    deltag.remove();
 
-        const newtag = document.getElementById("_col_header_" + new_col_name);
+    const new_row = document.createElement("div");
+    new_row.classList.add("_row_elem");
 
-        newtag.innerHTML = `<h2>${new_col_name}</h2>
-                            <div class = "circle" id ="circle_${new_col_name}">
-                                <div class="total_num">
-                                    0
-                                </div>
+    const todo_table_location = document.getElementsByClassName("_todo_table")[0];
+    todo_table_location.append(new_row);
+
+    const new_col = document.createElement("div");
+    new_col.classList.add("_col_header");
+    new_col.setAttribute("id", "_col_header_" + entered_new_col_name);
+    
+
+    new_col.innerHTML = `<h2>${entered_new_col_name}</h2>
+                        <div class = "circle" id ="circle_${entered_new_col_name}">
+                            <div class="total_num">
+                                0
                             </div>
-                            <div>
-                                <button class="my_button_add_list" id="add_${new_col_name}">
-                                    <i class="fa fa-plus"></i>
-                                </button>
-                                <button class="my_button_remove_list" id="del_${new_col_name}">
-                                    <i class="fa fa-remove"></i>
-                                </button>
-                            </div>`
+                        </div>
+                        <div>
+                            <button class="my_button_add_list" id="add_${entered_new_col_name}">
+                                <i class="fa fa-plus"></i>
+                            </button>
+                            <button class="my_button_remove_list" id="del_${entered_new_col_name}">
+                                <i class="fa fa-remove"></i>
+                            </button>
+                        </div>`
 
+    new_row.prepend(new_col);
 
-        make_add_button_active(new_col_name);
-        make_delete_button_active(new_col_name);
+    make_add_button_active(entered_new_col_name);
+    make_delete_button_active(entered_new_col_name);
 
-        const temp = new todo_elem_list(new_col_name/*status*/);
-        todo_status_list.push(temp);
-
-        //update_list();
-    }
+    const temp = new todo_elem_list(entered_new_col_name/*status*/);
+    todo_status_list.push(temp);
 }
 
 // column +에 이벤트 추가
@@ -76,16 +99,17 @@ function make_delete_button_active(new_col_name){
 
     del_btn.addEventListener('click', () =>{
         show_modal_delete(new_col_name);
-    },true);
+    })
 }
 
+// 화면에 모달 생성(카드 추가 이벤트)
 function show_modal_add(new_col_name){
     const modal_in_display = document.getElementById("#_todo_table");
     const new_modal = document.createElement("section");
     new_modal.id = "modal";
     
     new_modal.innerHTML = `<div id="modal_center">
-                                    <span style="font-size:25px; padding-top:50px;">새로운 항목을 등록하시겠습니까?</span>
+                                    <span id="modal_title">새로운 항목을 등록하시겠습니까?</span>
                                     <div id="modal_button_group">
                                         <button class="modal_button" id="modal_cancel_button" style="background-color: lightgrey;">
                                             취소
@@ -107,17 +131,20 @@ function show_modal_add(new_col_name){
     cancel_btn.addEventListener('click', cancel_action);
 }
 
+// 모달에서 취소를 누른 경우
 function cancel_action() {
     const modal_display = document.getElementById("modal");
     modal_display.remove();
 }
+
+// 모달에서 삭제를 누른 경우(컬럼 전체 삭제시)
 function show_modal_delete(new_col_name){
     const modal_in_display = document.getElementById("#_todo_table");
     const new_modal = document.createElement("section");
     new_modal.id = "modal";
     
     new_modal.innerHTML = `<div id="modal_center">
-                                    <span style="font-size:25px; padding-top:50px;">항목을 삭제하시겠습니까?</span>
+                                    <span id="modal_title">항목을 삭제하시겠습니까?</span>
                                     <div id="modal_button_group">
                                         <button class="modal_button" id="modal_cancel_button" style="background-color: lightgrey;">
                                             취소
@@ -138,48 +165,36 @@ function show_modal_delete(new_col_name){
     cancel_btn.addEventListener('click', cancel_action);
 }
 
+// 컬럼에 카드를 추가하는 함수
 function add_card_to_col(id){
     const box = document.getElementById("_col_header_"+id);
     const newp = document.createElement('div');
-    newp.classList.add("_col_elem");
+    newp.classList.add("_col_elem_with_input");
+    // 카드에 입력받는 상황
     newp.classList.add("editing");
 
-    newp.innerHTML = `<h3 id="_elem_header"><b><input id="card_title" type='text' style='font-size:17px' placeholder="제목을 입력하세요"></b>
-                        </h3>
-                        <pre><textarea id="card_contents" type='text' placeholder="내용을 입력하세요"></textarea></pre>
-                        <div class="add_delete_button_area">
+    newp.innerHTML = `<div class="card_contents">
+                        <input class="card_contents_title" type='text' placeholder="제목을 입력하세요">
+                        <pre><textarea class="card_contents_contents" type='text' placeholder="내용을 입력하세요"></textarea></pre>
+                    </div>
+                    <div class="add_delete_button_area">
                         <button class="card_delete_button" id="card_delete_button_${id}">삭제</button>
                         <button class="card_add_button" id="card_add_button_${id}">등록</button>
-                        </div>`
+                    </div>`
+    
     box.after(newp);
 
-    //update_total_num(id);
-    const new_card_title = document.getElementById("card_title");
-    const new_card_contents = document.getElementById("card_contents");
-    // new_card_title.addEventListener('keyup', (event)=> {make_new_card(event, new_card_title)});
-    // new_card_contents.addEventListener('keyup', (event)=> {make_new_card(event, new_card_contents)});
-
-    // const card_del_btn = document.getElementsByClassName("card_delete_button");
-    // const card_add_btn = document.getElementsByClassName("card_add_button");
-    
-    // for(var i=0;i<card_del_btn.length;i++){
-    //     card_del_btn[i].addEventListener('click', ()=>{del_card_before_register(new_card_title)});
-    // }
-    // for(var i=0;i<card_add_btn.length;i++){
-    //     card_add_btn[i].addEventListener('click', ()=>{make_new_card(new_card_title, new_card_contents)});
-    // }
-
-    // text_area.addEventListener()
     const card_del_btn = document.getElementById("card_delete_button_" + id);
     const card_add_btn = document.getElementById("card_add_button_" + id);
 
-    card_del_btn.addEventListener('click', ()=>{del_card_before_register(new_card_title)});
-    card_add_btn.addEventListener('click', ()=>{make_new_card(id, new_card_title, new_card_contents)});
+    card_del_btn.addEventListener('click', (e)=>{del_card_before_register(e, new_card_title)});
+    card_add_btn.addEventListener('click', (e)=>{make_new_card(e, id)});
     
     const modal_display = document.getElementById("modal");
     modal_display.remove();
 }
 
+// 전체 컬럼을 삭제하는 함수
 function delete_column_from_todo_table(id){
     const box = document.getElementById("_col_header_"+id);
     box.parentNode.remove();
@@ -188,50 +203,64 @@ function delete_column_from_todo_table(id){
     modal_display.remove();
 }
 
+// 입력시 삭제가 눌린 경우
 function del_card_before_register(id){
     id.parentNode.parentNode.parentNode.remove();
 }
 
-function make_new_card(id, title, contents){
+// 입력한 값을 바탕으로 새로운 카드를 생성해주는 함수
+function make_new_card(e, id){
+    const card_to_delete = e.target.closest("._col_elem_with_input");
+    card_to_delete.lastChild.remove();
 
-    title.parentNode.parentNode.parentNode.classList.remove("editing");
-    const del_button_area = title.parentNode.parentNode.parentNode.lastChild;
+    const new_button_group_for_new_card = document.createElement("div");
+    new_button_group_for_new_card.classList.add("card_button_group");
+    
+    card_to_delete.append(new_button_group_for_new_card);
+
+    const new_card_contents_location = card_to_delete.childNodes[0];
+
+    const new_title = new_card_contents_location.childNodes[1].value;
+    const new_contents = new_card_contents_location.childNodes[3].childNodes[0].value;
+
     const cur_time = new Date();
-    const new_info_to_side_card = new side_menu_card(id, null, title.value, cur_time, "추가");
+    const new_info_to_side_card = new side_menu_card(id, null, new_title, cur_time, "추가");
 
     side_menu_arr.card_array_push(new_info_to_side_card);
 
-    console.log(side_menu_arr);
-    del_button_area.remove();
+    new_card_contents_location.childNodes[1].remove();
+    new_card_contents_location.childNodes[3].remove();
+    new_card_contents_location.innerHTML = `<div class="card_contents_title">${new_title}</div>
+                                    <pre><div class="card_contents_contents">${new_contents}</div></pre>
+                                    <div class="card_contents_author">author by web</div>`
 
+    new_button_group_for_new_card.innerHTML = `<div class="my_button_delete"><i class="fa fa-remove"></i></div>`
 
-    title.parentNode.innerHTML = `<span class="card_title">${title.value}</span>
-                                <button class="my_button_delete" id="delete_card_${title.value}">
-                                    <i class="fa fa-remove"></i>
-                                </button>`;
-    contents.parentNode.innerHTML = `${contents.value}`;
-
-    const card_del_button = document.getElementById("delete_card_" + title.value);
-    card_del_button.addEventListener('click', ()=>{delete_card_in_column(id, title.value)});
-    increase_total_num(id, title, contents);
-    //update_side_menu_add(id, title, contents);
-    title.remove();
-    contents.remove();
+    card_to_delete.classList.remove("editing");
+    card_to_delete.classList.remove("_col_elem_with_input");
+    card_to_delete.classList.add("_col_elem");
+    card_to_delete.addEventListener('click', (e)=>{delete_card_in_column(e, id)});
+    increase_total_num(id, new_title, new_contents);
 }
 
-// function update_list() {
-//     console.log(todo_status_list.length);
-//     console.log(todo_status_list[0].status_elem_list);
-// }
 
-function delete_card_in_column(id, value){
-    const del_card = document.getElementById("delete_card_" + value);
-    del_card.parentNode.parentNode.parentNode.remove();
+// 컬럼에서 카드를 삭제하는 함수
+function delete_card_in_column(e, id){
+    const del_card = e.target.closest("._col_elem");
+    if(del_card == null) return;
 
-    //update_side_menu_delete(id, value);
+    const del_title = del_card.childNodes[0].childNodes[0].innerText;
+    del_card.remove();
+
     const cur_time = new Date();
-    const new_info_to_side_card = new side_menu_card(id, null, value, cur_time, "삭제");
+    const new_info_to_side_card = new side_menu_card(id, null, del_title, cur_time, "삭제");
 
     side_menu_arr.card_array_push(new_info_to_side_card);
-    decrease_total_num(id, value);
+    decrease_total_num(id, del_title);
+}
+
+function edit_column_name(e){
+    const is_column = e.target.closest("._col_header");
+    if(is_column == null) return;
+
 }

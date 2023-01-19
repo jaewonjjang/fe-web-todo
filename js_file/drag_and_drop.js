@@ -7,72 +7,106 @@
 5. 이동이 끝나면 우측 메뉴 업데이트 작업
 */
 
-
 import {side_menu_card, side_menu_arr} from "./side_menu.js"
 
 const todo_table = document.getElementsByClassName("_todo_table")[0];
-const remove_drag_from_card = todo_table.getElementsByClassName("_col_elem");
+
+let dragable = false;
 
 document.body.ondragstart = function(){
   return false;
 }
 
 todo_table.addEventListener("mousedown", (e) => {
-    const cursoroncard = e.target.closest("._col_elem");
-    const is_editing = e.target.closest(".editing");
-    const is_remove = e.target.closest(".my_button_delete")
-
-    if (cursoroncard != null && is_editing == null && is_remove==null) {
-      const newp = document.createElement("div");
-    
-      function onMouseMove(e) {
-
-        
-        newp.classList.add("_col_elem");
-        newp.classList.add("illusion");
-        newp.innerHTML = cursoroncard.innerHTML;
-
-        cursoroncard.after(newp);
-
-        let shiftX = e.clientX - e.target.getBoundingClientRect().left;
-        let shiftY = e.clientY - e.target.getBoundingClientRect().top;
-
-        function moveAt(pageX, pageY) {
-          cursoroncard.style.left = pageX - shiftX + 'px';
-          cursoroncard.style.top = pageY - shiftY + 'px';
-        }
-      
-        moveAt(e.pageX, e.pageY);
-
-        cursoroncard.classList.add("moving");
-        document.body.append(cursoroncard);
-        moveAt(e.pageX, e.pageY);
-        document.body.style.userSelect='none';
-        let elemBelow = document.elementFromPoint(e.clientX, e.clientY);
-        const new_location_for_moving_card = elemBelow.closest("._row_elem");
-        
-        if(new_location_for_moving_card){
-          const col_name_of_new_location = new_location_for_moving_card.childNodes[0];
-          col_name_of_new_location.insertAdjacentElement("afterend", newp);
-        }
-      }
-    
-      document.addEventListener('mousemove', onMouseMove);
-    
-      function onmouseup() {
-        document.removeEventListener('mousemove', onMouseMove);
-        cursoroncard.classList.remove("moving");
-        // const cur_title = cursoroncard.getElementsByClassName("card_title")[0].innerHTML;
-        // const old_col_name = cursoroncard.parentNode.getElementsByClassName
-        // console.log(cur_title);
-        newp.after(cursoroncard);
-        newp.remove();
-
-        //append_to_right_column(cursoroncard);
-        cursoroncard.onmouseup = null;
-      };
-
-      document.addEventListener('mouseup', onmouseup);
-    };
+  const cursoroncard = e.target.closest("._col_elem");
+  if (cursoroncard != null) {
+    console.log("mousedown");
+    dragable = true;
+  }
 });
+
+todo_table.addEventListener("mousemove", (e) => {
+  const cursoroncard = e.target.closest("._col_elem");
+  const is_editing = document.getElementsByClassName("_col_elem_with_input");
+  if (cursoroncard && dragable && !is_editing.length) {
+    // console.log("mousemove");
+    dragcard(e);
+    dragable = false;
+  }
+});
+
+todo_table.addEventListener("mouseup", (e) => {
+  const row_loc = e.target.closest("._row_elem");
+  if (row_loc != null) {
+    dragable = false;
+  }
+});
+
+function dragcard(e){
+  const moving_card = e.target.closest("._col_elem");
+  const moving_card_title = moving_card.childNodes[0].childNodes[0].innerText;
+  let old_title = moving_card.parentNode.firstChild.firstChild.innerText;
+  let new_title;
+  // console.log(moving_card.parentNode.firstChild.firstChild.innerText);
+  const illusion_of_moving_card = moving_card.cloneNode(true);
+  illusion_of_moving_card.classList.add("illusion");
+
+  moving_card.after(illusion_of_moving_card);
+
+  let shiftX = e.clientX - e.target.getBoundingClientRect().left;
+  let shiftY = e.clientY - e.target.getBoundingClientRect().top;
+
+  function moveAt(pageX, pageY) {
+    moving_card.style.left = pageX - shiftX + 'px';
+    moving_card.style.top = pageY - shiftY + 'px';
+  }
+
+  moveAt(e.pageX, e.pageY);
+
+  function onMouseMove(e) {
+    moving_card.classList.add("moving");
+    document.body.append(moving_card);
+    moveAt(e.pageX, e.pageY);
+    document.body.style.userSelect='none';
+    let element_at_cursor = document.elementFromPoint(e.clientX, e.clientY);
+    const new_location_for_moving_card = element_at_cursor.closest("._row_elem");
+
+    const cursor_between_cards = element_at_cursor.closest("._col_elem");
+    if(new_location_for_moving_card && cursor_between_cards){
+      new_title = new_location_for_moving_card.firstChild.firstChild.innerText;
+      const half_of_card_height = (cursor_between_cards.getBoundingClientRect().top + cursor_between_cards.getBoundingClientRect().bottom)/2;
+      if(e.pageY > half_of_card_height) {
+        cursor_between_cards.insertAdjacentElement("afterend", illusion_of_moving_card);
+      }
+      else {
+        cursor_between_cards.insertAdjacentElement("beforebegin", illusion_of_moving_card);
+      }
+    }
+    else if(new_location_for_moving_card && cursor_between_cards == null){
+      new_title = new_location_for_moving_card.firstChild.firstChild.innerText;
+      const col_name_of_new_location = new_location_for_moving_card.childNodes[0];
+      col_name_of_new_location.insertAdjacentElement("afterend", illusion_of_moving_card);
+    }
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  function onmouseup() {
+    document.removeEventListener('mousemove', onMouseMove);
+    moving_card.classList.remove("moving");
+    illusion_of_moving_card.after(moving_card);
+    illusion_of_moving_card.remove();
+
+    if(old_title != new_title) {
+      const cur_time = new Date();
+      const new_info_to_side_card = new side_menu_card(old_title, new_title, moving_card_title, cur_time, "이동");
+
+      side_menu_arr.card_array_push(new_info_to_side_card);
+    }
+    moving_card.onmouseup = null;
+    document.removeEventListener('mouseup', onmouseup);
+  };
+
+  document.addEventListener('mouseup', onmouseup);
+}
 
