@@ -47,6 +47,21 @@ button:hover {
     color:#FF4343;
 }
 
+.my_button_edit{   
+    border-style:solid;
+    background-color:transparent;
+    /* border-color: transparent; */
+    color : #BDBDBD;
+	font-weight:lighter;
+	text-decoration:none;
+    margin-left:auto;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.my_button_edit:hover {
+    color:#FF4343;
+}
 #menu_close_button {
     border:none;
     background-color: white;

@@ -187,7 +187,7 @@ function add_card_to_col(id){
     const card_del_btn = document.getElementById("card_delete_button_" + id);
     const card_add_btn = document.getElementById("card_add_button_" + id);
 
-    card_del_btn.addEventListener('click', (e)=>{del_card_before_register(e, new_card_title)});
+    card_del_btn.addEventListener('click', (e)=>{del_card_before_register(e)});
     card_add_btn.addEventListener('click', (e)=>{make_new_card(e, id)});
     
     const modal_display = document.getElementById("modal");
@@ -204,8 +204,9 @@ function delete_column_from_todo_table(id){
 }
 
 // 입력시 삭제가 눌린 경우
-function del_card_before_register(id){
-    id.parentNode.parentNode.parentNode.remove();
+function del_card_before_register(e){
+    const removed_card = e.target.closest("._col_elem_with_input");
+    removed_card.remove();
 }
 
 // 입력한 값을 바탕으로 새로운 카드를 생성해주는 함수
@@ -234,7 +235,12 @@ function make_new_card(e, id){
                                     <pre><div class="card_contents_contents">${new_contents}</div></pre>
                                     <div class="card_contents_author">author by web</div>`
 
-    new_button_group_for_new_card.innerHTML = `<div class="my_button_delete"><i class="fa fa-remove"></i></div>`
+    new_button_group_for_new_card.innerHTML = `<div class="my_button_delete">
+                                                    <i class="fa fa-remove"></i>
+                                                </div>
+                                                <div class="my_button_edit">
+                                                    <i class="fa fa-pencil" ></i>
+                                                </div>`
 
     card_to_delete.classList.remove("editing");
     card_to_delete.classList.remove("_col_elem_with_input");
@@ -263,4 +269,25 @@ function edit_column_name(e){
     const is_column = e.target.closest("._col_header");
     if(is_column == null) return;
 
+    is_column.style.display="none";
+
+    const input_new_col_name = document.createElement("div");
+    input_new_col_name.innerHTML = `<input id='enter_new_col_name' type='text' value=${is_column.childNodes[0].innerText}>`
+    is_column.after(input_new_col_name);
+
+    document.body.addEventListener('click', (e) => change_col_name(e));
+}
+
+function change_col_name(e) {
+    const is_changed = document.getElementById("enter_new_col_name");
+    const is_in_inputbox = e.target.closest("#enter_new_col_name");
+    if(is_changed == null) {
+        document.body.removeEventListener('click', (e) => change_col_name(e));
+        return;
+    }
+    else if(is_in_inputbox) return;
+
+    is_changed.parentNode.parentNode.childNodes[0].childNodes[0].innerText = `${is_changed.value}`;
+    is_changed.parentNode.parentNode.childNodes[0].style.display = '';
+    is_changed.remove();
 }

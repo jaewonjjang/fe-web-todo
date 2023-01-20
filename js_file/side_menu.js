@@ -57,14 +57,14 @@ function update_side_menu(close_menu){
             newp.innerHTML = '';
             newp.innerHTML = `<div class="side_card_imoji">&#128129</div>
                                 <div class="side_card_contents">
-                                    <div class="contents_author" style="font-size:13px">
+                                    <div class="contents_author">
                                         @jaewon
                                     </div>
-                                    <div class="contents_title" style="font-size:15px">
-                                        ${side_menu_arr.card_array[i].col_id1}에 ${side_menu_arr.card_array[i].new_title}을 등록하였습니다
+                                    <div class="contents_title">
+                                        <b>${side_menu_arr.card_array[i].col_id1}</b>에 <b>${side_menu_arr.card_array[i].new_title}</b>을 <b>등록</b>하였습니다
                                     </div>
-                                    <div class="contents_time" style="font-size:12px">
-                                        ${time_collaps}분전
+                                    <div class="contents_time">
+                                        ${time_collaps}전
                                     </div>
                                 </div>`;
             close_menu.after(newp);
@@ -76,14 +76,14 @@ function update_side_menu(close_menu){
             newp.innerHTML = '';
             newp.innerHTML = `<div class="side_card_imoji">&#128129</div>
                                 <div class="side_card_contents">
-                                    <div class="contents_author" style="font-size:13px">
+                                    <div class="contents_author">
                                         @jaewon
                                     </div>
-                                    <div class="contents_title" style="font-size:15px">
-                                        ${side_menu_arr.card_array[i].col_id1}에 ${side_menu_arr.card_array[i].new_title}을 삭제하였습니다
+                                    <div class="contents_title">
+                                    <b>${side_menu_arr.card_array[i].col_id1}</b>에서 <b>${side_menu_arr.card_array[i].new_title}</b>을 <b>삭제</b>하였습니다
                                     </div>
-                                    <div class="contents_time" style="font-size:12px">
-                                        ${time_collaps}분전
+                                    <div class="contents_time">
+                                        ${time_collaps}전
                                     </div>
                                 </div>`;
             close_menu.after(newp);
@@ -95,14 +95,14 @@ function update_side_menu(close_menu){
             newp.innerHTML = '';
             newp.innerHTML = `<div class="side_card_imoji">&#128129</div>
                                 <div class="side_card_contents">
-                                    <div class="contents_author" style="font-size:13px">
+                                    <div class="contents_author">
                                         @jaewon
                                     </div>
-                                    <div class="contents_title" style="font-size:15px">
-                                        ${side_menu_arr.card_array[i].col_id1}에서 ${side_menu_arr.card_array[i].col_id2}로 ${side_menu_arr.card_array[i].new_title}가 이동하였습니다
+                                    <div class="contents_title">
+                                        <b>${side_menu_arr.card_array[i].col_id1}</b>에서 <b>${side_menu_arr.card_array[i].col_id2}</b>로 <b>${side_menu_arr.card_array[i].new_title}</b>가 <b>이동</b>하였습니다
                                     </div>
-                                    <div class="contents_time" style="font-size:12px">
-                                        ${time_collaps}분전
+                                    <div class="contents_time">
+                                        ${time_collaps}전
                                     </div>
                                 </div>`;
             close_menu.after(newp);
@@ -120,7 +120,7 @@ function flush_prev_menu(){
 function time_collap_for_new_card(cur_time, card_time){
     const time_diff = (cur_time.getTime() - card_time.getTime()) / 60000;
 
-    if(time_diff < 1) return 0;
-    else return Math.floor(time_diff); 
+    if(time_diff < 1) return "방금";
+    else return Math.floor(time_diff)+"분"; 
 }
 export {side_menu_card, side_menu_arr};

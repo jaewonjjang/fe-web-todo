@@ -42,3 +42,18 @@
     /* padding-right:0px; */
 }
 
+#enter_new_col_name{
+    border-style:solid;
+    display:flex;
+    justify-content:space-between;
+    width: 300px;
+    height: 26px;
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    border-radius: 0px;
+}
+
+
