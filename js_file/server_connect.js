@@ -8,6 +8,7 @@ fetch(status_list_addr)
 
 
 function initial_render(item){
+    // debugger
     for(let json_idx=0;json_idx<item.length;json_idx++){
         const new_row = document.createElement("div");
         new_row.classList.add("_row_elem");

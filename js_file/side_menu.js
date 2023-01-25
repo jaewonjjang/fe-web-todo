@@ -1,4 +1,4 @@
-class side_menu_card{
+class menu_card{
     constructor(col_id1, col_id2, new_title/*등록된 카드 혹은 삭제된 카드의 title*/, time/*이벤트가 발생한 시간*/, action){
         this.col_id1 = col_id1;
         this.col_id2 = col_id2;
@@ -18,15 +18,16 @@ class menu_card_array {
     card_array_pop(){
         this.card_array.pop();
     }
+    static 
 };
 
 const side_menu_arr = new menu_card_array();
 
-// 화면 오른쪽에 기록 화면 추가 -> visable
-const show_menu = document.getElementById("top_button");
-show_menu.addEventListener('click', menu_visible);
+// // 화면 오른쪽에 기록 화면 추가 -> visable
+// const show_menu = document.getElementById("top_button");
+// show_menu.addEventListener('click', menu_visible);
 
-function menu_visible(){
+export function menu_visible(){
     let side_menu= document.getElementById("side_bar");
 
 	side_menu.style.display = "block";
@@ -123,4 +124,4 @@ function time_collap_for_new_card(cur_time, card_time){
     if(time_diff < 1) return "방금";
     else return Math.floor(time_diff)+"분"; 
 }
-export {side_menu_card, side_menu_arr};
+export {menu_card, side_menu_arr};

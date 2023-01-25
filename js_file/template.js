@@ -1,16 +1,16 @@
 import {todo_status_list, todo_elem_list} from "./todo_class.js" 
-import {side_menu_card, side_menu_arr} from "./side_menu.js"
+import {menu_card, side_menu_arr} from "./side_menu.js"
 import {increase_total_num, decrease_total_num} from "./total_elem_number.js"
 
-const todo_table = document.getElementsByClassName("_todo_table")[0];
+// const todo_table = document.getElementsByClassName("_todo_table")[0];
 
-todo_table.addEventListener('dblclick', (e) => edit_column_name(e));
+// todo_table.addEventListener('dblclick', (e) => edit_column_name(e));
 
-const column_add_button = document.getElementById("#column_add_button");
-column_add_button.addEventListener('click', enter_new_column_name)
+// const column_add_button = document.getElementById("#column_add_button");
+// column_add_button.addEventListener('click', enter_new_column_name)
 
 //새롭게 생성할 column의 이름을 입력받는 함수
-function enter_new_column_name(){
+export function enter_new_column_name(){
     const modal_in_display = document.getElementById("#_todo_table");
     const new_modal = document.createElement("section");
     new_modal.id = "modal";
@@ -225,7 +225,7 @@ function make_new_card(e, id){
     const new_contents = new_card_contents_location.childNodes[3].childNodes[0].value;
 
     const cur_time = new Date();
-    const new_info_to_side_card = new side_menu_card(id, null, new_title, cur_time, "추가");
+    const new_info_to_side_card = new menu_card(id, null, new_title, cur_time, "추가");
 
     side_menu_arr.card_array_push(new_info_to_side_card);
 
@@ -259,7 +259,7 @@ function delete_card_in_column(e, id){
     del_card.remove();
 
     const cur_time = new Date();
-    const new_info_to_side_card = new side_menu_card(id, null, del_title, cur_time, "삭제");
+    const new_info_to_side_card = new menu_card(id, null, del_title, cur_time, "삭제");
 
     side_menu_arr.card_array_push(new_info_to_side_card);
     decrease_total_num(id, del_title);
@@ -291,3 +291,4 @@ function change_col_name(e) {
     is_changed.parentNode.parentNode.childNodes[0].style.display = '';
     is_changed.remove();
 }
+export{make_add_button_active, make_delete_button_active }

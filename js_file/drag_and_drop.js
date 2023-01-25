@@ -1,4 +1,4 @@
-import {side_menu_card, side_menu_arr} from "./side_menu.js"
+import {menu_card, side_menu_arr} from "./side_menu.js"
 import { todo_status_list } from "./todo_class.js";
 
 const todo_table = document.getElementsByClassName("_todo_table")[0];
@@ -89,7 +89,7 @@ function dragcard(e){
 
     if(old_title != new_title) {
       const cur_time = new Date();
-      const new_info_to_side_card = new side_menu_card(old_title, new_title, moving_card_title, cur_time, "이동");
+      const new_info_to_side_card = new menu_card(old_title, new_title, moving_card_title, cur_time, "이동");
 
       side_menu_arr.card_array_push(new_info_to_side_card);
     }
