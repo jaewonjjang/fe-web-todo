@@ -1,0 +1,125 @@
+button:hover {
+    cursor:pointer;
+}
+
+#top_button {
+    border-style:solid;
+    position: absolute;
+    top:51px;
+    right:84px;
+}
+#top_button:hover{
+    color:gray;
+}
+
+.my_button_remove_list{
+    border-style:solid;
+    background-color:transparent;
+    color : #BDBDBD;
+}
+
+.my_button_remove_list:hover{
+    color:#0075DE;
+}
+
+.my_button_add_list{
+    border-style:solid;
+    background-color:transparent;
+    color : #BDBDBD;
+    margin-right: auto;
+}
+
+.my_button_add_list:hover{
+    color:#0075DE;
+}
+
+.my_button_delete{   
+    border-style:solid;
+    background-color:transparent;
+    /* border-color: transparent; */
+    color : #BDBDBD;
+	font-weight:lighter;
+	text-decoration:none;
+    margin-left:auto;
+}
+
+.my_button_delete:hover{
+    color:#FF4343;
+}
+
+.my_button_edit{   
+    border-style:solid;
+    background-color:transparent;
+    /* border-color: transparent; */
+    color : #BDBDBD;
+	font-weight:lighter;
+	text-decoration:none;
+    margin-left:auto;
+    font-size:11px;
+    margin-top:3px;
+}
+
+.my_button_edit:hover {
+    color:#FF4343;
+}
+#menu_close_button {
+    border:none;
+    background-color: white;
+    position: absolute;
+    width: 10.5px;
+    height: 10.5px;
+    top:50.75px;
+    left:347px;
+}
+
+#menu_close_button:hover{
+    color:gray;
+}
+
+.column_add_button {
+    border-style:solid;
+    position:absolute;
+    z-index:1;
+    width:50px;
+    height:50px;
+    margin-left:90%;
+    margin-top:800px;
+    background-color:skyblue;
+    border-radius: 50%;
+    /* border-color: transparent; */
+    color:white;
+    font-size:30px;
+}
+
+.column_add_button:hover{
+    background-color:blue;
+}
+
+.add_delete_button_area{
+    border-style:solid;
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.card_add_button{
+    border-style:solid;
+    width:134px;
+    height:40px;
+    border-radius: 5%;
+    font-size: 22px;
+    color:white;
+    background-color:blue;
+    margin-left:8px;
+}
+
+.card_delete_button{
+    width:134px;
+    height:40px;
+    border-radius: 5%;
+    font-size: 22px;
+    color:white;
+    text-align:center;
+    background-color:rgb(199, 177, 177);
+}

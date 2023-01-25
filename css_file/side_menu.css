@@ -1,0 +1,65 @@
+.side_menu {
+    position: absolute;
+    width: 332px;
+    height: 943px;
+    left: 988px;
+    top: 0px;
+    
+    background: #FFFFFF;
+    
+    box-shadow: 0px 0px 4px rgba(204, 204, 204, 0.5), 0px 2px 4px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(2px);
+
+    display:none;
+    z-index: 2;
+    padding-top:80px;
+    padding-right:80px;
+    padding-left:40px;
+    overflow: auto;
+}
+
+.side_card{
+    border-style:solid;
+    visibility:inherit;
+    display:flex;
+    flex-direction:row;
+    width:332px;
+    height:97px;
+    background-color: white;
+    padding:16px;
+}
+
+.side_card > .side_card_imoji{
+    border-style:solid;
+    font-size:35px;
+    border-color: black;
+    margin-right: 16px;
+}
+
+.side_card > .contents{
+    border-style:solid;
+    display:flex;
+    flex-direction:column;
+    width: 244px;
+    height: 46px;
+}
+
+.contents_author {
+    width: 244px;
+    height: 23px;
+    margin-bottom: 8px;
+    font-size:20px;
+}
+
+.contents_contents {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 20px;
+}
+
+.contents_time {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 20px;
+    color: #828282;
+}
