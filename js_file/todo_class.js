@@ -1,6 +1,5 @@
 const todo_status_list = [];
 
-
 // 상태값들을 원소로 갖는 배열
 class todo_elem_list{
     constructor(status){

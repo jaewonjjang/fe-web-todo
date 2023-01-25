@@ -1,12 +1,3 @@
-/* Drag and Drop
-1. 카드 위에서 mousedown이벤트가 발생하면 잔상이 남아야된다.
-2. 마우스 위치가 이동하면 잔상은 그자리에 있고, 마우스 위치에 따라 카드가 이동해야 된다
-    -> 마우스 위치가 일정 지점을 넘어가면 넘어간 쪽의 column으로 카드 위치를 이동
-3. mouseup 이벤트가 발생하면 카드를 잔상이 생긴 지점에 넣는다. 
-4. 저장된 데이터에 접근해서(선택된 card의 title, contents 이용하고 parents id 이용하면 될듯...?)
-5. 이동이 끝나면 우측 메뉴 업데이트 작업
-*/
-
 import {side_menu_card, side_menu_arr} from "./side_menu.js"
 import { todo_status_list } from "./todo_class.js";
 

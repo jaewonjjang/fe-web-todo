@@ -75,8 +75,3 @@ function initial_render(item){
 
     
 }
-
-
-function generate_server_id(data_type){
-
-}
